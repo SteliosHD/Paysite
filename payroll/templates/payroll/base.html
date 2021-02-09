@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html id="content-2"  lang="en">
+<head >
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    {% comment %} <link  rel="stylesheet" type = "text/css" href=" {% static 'contact/base.css' %}"> {% endcomment %}
+   <link rel="stylesheet" href="{% static 'payroll/index.css' %} ">
+
+
+
+
+ <title>PayRoll</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light  " style="background-color: #e3f2fd;margin-bottom:1em;">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'payroll:index' %}">Payroll App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto ">
+                {% block shift %}
+                {% endblock shift %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock content %}
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    {% comment %} <script src="{% static 'contact/scripts/my.js' %}"></script> {% endcomment %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/9cbaaa6963.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" >
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            
+            window.location = $(this).data("href");
+        });
+        $('.clickable-row').hover(function() {
+        $(this).css('cursor','pointer');
+        $(this).css('border', '3px solid skyBlue');
+         });
+        $('.clickable-row').mouseleave(function() {
+        $(this).css('border', '');
+         });
+        // $( "input[name='start_time']" ).
+
+    });
+    </script>
+</body>
+</html>

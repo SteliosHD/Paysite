@@ -1,0 +1,63 @@
+{% extends 'payroll/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+        <div class=" float-left" id="shiftUpdate">
+            <div class="card card-body float-right" style="margin:1em;">
+                <form action="" method="post"> {% csrf_token %}                        
+                    {{form|crispy}}
+                    <button type="Submit" class="btn btn-primary" style="margin-top:1em;">
+                    Update
+                    </button>
+                </form>      
+            </div>
+        </div>      
+        <div class="shifts-view container ">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="Shifts">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Date of Shift</th>
+                            <th>Day</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Tip</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                            <tr>
+                                <th>{{object.identity}}</th>
+                                <th>{{object.date}}</th>
+                                <th>{{object.get_day}}</th>
+                                <th>{{object.start_time}}</th>
+                                <th>{{object.end_time}}</th>
+                                <th>{{object.tip}}€</th>        
+                            </tr>
+                        
+                        </tbody>
+                        
+                    </table>
+            </div>
+            <div class="row">
+                <div class ="float-right ml-auto">
+                    <a class="btn btn-danger" href="{% url 'payroll:shift-delete' object.identity %}">Delete Shift</a>
+                </div>
+            </div>
+        </div>
+        
+
+
+{% endblock content %}
+
+{% block shift %}
+    <li class="nav-item active ">
+        <a class="nav-link" href="{% url 'payroll:index' %}">Back to Shifts Summary <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item ">
+        <a class="nav-link" href="{{shift.get_absolute_url}}">Back to Shift</a>
+    </li>
+{% endblock shift %}

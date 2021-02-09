@@ -1,0 +1,131 @@
+{% extends 'payroll/base.html' %}
+{% load crispy_forms_tags %}
+{% load mathfilters %}
+
+{% block content %}
+
+
+ <main class="container-fluid">
+        <div class="float-left ">
+            <div class="card card-body" style="margin:1em;">
+                <h6 style="font-weight:bold;">Filter Period</h6>
+                <form method="GET" action=".">    
+                    <div class="form-row w-75">
+                  
+                            <div class="form-group col-6">
+
+                                <label for="shiftDateMin" style="font-weight:bold;">Date Min</label>
+                                <input id="shiftDateMin" class="form-control py-2 border-right-0 border input-sm" type="date" name="shift_min_date">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="shiftDateMax" style="font-weight:bold;">Date Max</label>
+                                <input id="shiftDateMax" class="form-control py-2 border-right-0 border input-sm" type="date" name="shift_max_date">
+                            </div>                            
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    
+                </form>
+            </div>            
+            <div class="card card-body" style="margin:1em; ">       
+                <h6 style="font-weight:bold;">Information for Period : {{date_min}}&ndash;{{date_max}}</h6>
+                <ul style="list-style-type:none;padding-left:0;">
+                    <li>Hours Worked : {{total_duration.0}}h{{total_duration.1}}m</li>
+                    <li style="color:green;">Total Tips : {{total_tips|floatformat:2}}€</li>
+                    <li style="color:darkSalmon ;">Monthly Wage : {{total_wage|floatformat:2}}€ </li>
+                    {% if  total_wage > 0%}
+                        <li>Bike Compensation : 35€ </li>
+                        <li>Total Monthly Wage with tips : {{total_wage|addition:total_tips|addition:35|floatformat:2}}€  </li> 
+                        <li style="color:steelBlue;">Total Monthly Wage : <span style="font-weight:bold;">{{total_wage|addition:35|floatformat:2}}€ </span> </li> 
+                    {% else %}
+                        <li style="color:steelBlue;">Total Monthly Wage : <span style="font-weight:bold;">{{total_wage|floatformat:2}}€ </span> </li>                                                
+                    {% endif %}
+                   
+
+                </ul>
+            </div>
+        </div>
+        <div class="collapse float-right" id="collapseExample">
+            <div class="card card-body float-right" style="margin:1em;">
+                <form action="" method="post"> {% csrf_token %}                        
+                    {{form|crispy}}
+                    <button type="Submit" class="btn btn-primary" style="margin-top:1em;">
+                    Add
+                    </button>
+                </form>      
+            </div>
+        </div>             
+        <div class="shifts-view container ">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="Shifts">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>id</th>
+                            <th>Date of Shift</th>
+                            <th>Day</th>
+                            <th>Duration of Shift</th>
+                            <th>Tips</th>
+                            <th>Daily Wage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for shift in Shift  %}
+                            <tr class="clickable-row" data-href="{{shift.get_absolute_url}}">
+                                <th>{{ page_obj.start_index|add:forloop.counter0 }}</th>
+                                <th>{{shift.identity}}</th>
+                                <th>{{shift.date}}</th>
+                                <th>{{shift.get_day}}</th>
+                                <th>{{shift.get_duration.0}}h{{shift.get_duration.1}}m</th>
+                                <th>{{shift.tip}}€</th>
+                                <th>{{shift.get_wage|floatformat:2}}€</th>                        
+                            </tr>
+                            
+                        {% endfor %}
+                        </tbody>
+                        
+                    </table>
+                        {% if is_paginated %}
+                            
+                            {% if page_obj.has_previous %}
+                                <a class="pagi btn btn-outline-info mb-4"href="?page=1{{ dateURL}}">First</a>
+                                <a class="pagi btn btn-outline-info mb-4"href="?page={{page_obj.previous_page_number}}{{ dateURL}}">Previous</a>
+                            {% endif %}
+                            
+                            {% for num  in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <a class="pagi btn btn-info mb-4"href="?page={{num}}{{ dateURL}}">{{num}}</a>
+                                {% elif num > page_obj.number|add:'-3' and  num < page_obj.number|add:'3' %}
+                                    <a class="pagi btn btn-outline-info mb-4"href="?page={{num}}{{ dateURL}}">{{num}}</a>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <a class="pagi btn btn-outline-info mb-4"href="?page={{page_obj.next_page_number }}{{ dateURL }}">Next</a>
+                                <a class="pagi btn btn-outline-info mb-4"href="?page={{page_obj.paginator.num_pages}}{{ dateURL}}">Last</a>
+                            {% endif %}                            
+
+                        {% endif %}                    
+                    </div>
+                
+                </div>
+            </div>
+            <div class="row" style="margin:1em">
+                <div class="col-md-5 ml-auto ">
+                    <div id="add-shift">
+                        <button class="btn btn-primary float-right position-relative" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin:1em">
+                        Add Shift <span class="fa fa-plus fa-lg" aria-hidden="true"></span>
+                        </button>               
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+{% endblock content %}
+
+
+   

@@ -1,0 +1,30 @@
+{% extends 'payroll/base.html' %}
+
+{% block content %}
+        <div class=" container" id="shiftUpdate">
+            <div class="card card-body float-right" style="margin:1em;">
+                <form action="" method="post"> {% csrf_token %}    
+                    <fieldset class='form-group'>
+                        <legend class="border-bottom mb-4">Delete Shift</legend>
+                        <h2>Are you sure you want to delete the shift "#{{object.identity}}-{{object.date}}"</h2>
+                    </fieldset>                    
+                    <button type="Submit" class="btn btn-outline-danger" style="margin-top:1em;">
+                    Yes,Delete
+                    </button>
+                    <a class="btn btn-outline-secondary" style="margin-top:1em;" href="{% url 'payroll:shift-update' object.identity %}">
+                    Cancel
+                    </a>
+                </form>      
+            </div>
+        </div>      
+
+{% endblock content %}
+
+{% block shift %}
+    <li class="nav-item active ">
+        <a class="nav-link" href="{% url 'payroll:index' %}">Back to Shifts Summary <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item ">
+        <a class="nav-link" href="{{shift.get_absolute_url}}">Back to Shift</a>
+    </li>
+{% endblock shift %}

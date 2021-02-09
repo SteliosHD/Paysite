@@ -1,0 +1,26 @@
+/* #shiftDateMin{
+    width:100px;
+}
+#shiftDateMax{
+    width:100px;
+} */
+
+.card{
+    background-color:#f2f2f2;
+}
+
+.pagi.btn.btn-outline-info{
+    border-color:skyblue;
+    color: skyblue;
+}
+
+.pagi.btn.btn-info{
+    border-color:skyblue;
+    background-color: skyblue;
+    color: white;
+}
+
+.pagi.btn.btn-outline-info:active,.pagi.btn.btn-outline-info:focus,.pagi.btn.btn-outline-info:hover ,.pagi.btn.btn-outline-info:checked{
+    background-color: skyblue;
+    color: white;
+}
